@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center_horizontal"
+    tools:context=".SampleActivity">
+
+    <com.app.pieprogress.PieProgress
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:color="@color/colorPrimary"
+        app:percentage="75"
+        app:strokeMargin="8dp"
+        app:strokeWidth="8dp" />
+
+    <com.app.pieprogress.PieProgress
+        android:layout_marginTop="24dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:color="#dd00aa"
+        app:percentage="29"
+        app:strokeMargin="8dp"
+        app:strokeWidth="8dp" />
+
+    <com.app.pieprogress.PieProgress
+        android:layout_marginTop="24dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:color="#007722"
+        app:percentage="63"
+        app:strokeMargin="6dp"
+        app:strokeWidth="6dp" />
+
+</LinearLayout>

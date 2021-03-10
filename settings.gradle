@@ -1,0 +1,3 @@
+include ':PieProgress'
+include ':app'
+rootProject.name = "PieProgressExample"

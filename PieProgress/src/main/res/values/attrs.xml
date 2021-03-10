@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PieProgress">
+        <attr name="android:rotation" format="float" />
+        <attr name="percentage" format="float" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="strokeMargin" format="dimension" />
+        <attr name="color" format="color|reference" />
+    </declare-styleable>
+</resources>
