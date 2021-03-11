@@ -20,7 +20,13 @@ class PieProgress @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
     private var oldAngle: Float = 0f
-    private var currentAngle: Float = 10f
+
+    var currentAngle: Float = 0f
+        private set
+
+    var currentPercentage = 0f
+        get() = MAX_ANGLE.percentOf(currentAngle).toFloat()
+        private set
 
     private var strokeWidth = DEFAULT_STROKE_WIDTH
     private var strokeMargin = DEFAULT_STROKE_MARGIN
@@ -82,7 +88,7 @@ class PieProgress @JvmOverloads constructor(
     }
 
     private fun Canvas.drawPieContent() {
-        drawArc(pieRectF, oldAngle, currentAngle, true, paint)
+        drawArc(pieRectF, 0.0f, currentAngle, true, paint)
     }
 
     private fun Canvas.drawStroke() {
@@ -98,7 +104,9 @@ class PieProgress @JvmOverloads constructor(
     }
 
     fun setPercentage(percentage: Float) {
-        this.currentAngle = MAX_ANGLE.percent(percentage).toFloat()
+        val percentValue = if (percentage > 100f) 100f else percentage
+        oldAngle = currentAngle
+        currentAngle = MAX_ANGLE.percent(percentValue).toFloat()
         startAnimation(oldAngle, currentAngle)
     }
 
@@ -109,3 +117,5 @@ class PieProgress @JvmOverloads constructor(
 }
 
 private fun Number.percent(percentage: Number) = (this.toDouble() / 100) * percentage.toDouble()
+
+private fun Number.percentOf(value: Number) = (value.toDouble() * 100) / this.toDouble()
