@@ -1,38 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="16dp"
-    android:gravity="center_horizontal"
     tools:context=".SampleActivity">
 
-    <com.app.pieprogress.PieProgress
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:color="@color/colorPrimary"
-        app:percentage="75"
-        app:strokeMargin="8dp"
-        app:strokeWidth="8dp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <com.app.pieprogress.PieProgress
-        android:layout_marginTop="24dp"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:color="#dd00aa"
-        app:percentage="29"
-        app:strokeMargin="8dp"
-        app:strokeWidth="8dp" />
+        <com.app.pieprogress.PieProgress
+            android:id="@+id/progress1"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:color="@color/colorPrimary"
+            app:percentage="75"
+            app:strokeMargin="8dp"
+            app:strokeWidth="8dp" />
 
-    <com.app.pieprogress.PieProgress
-        android:layout_marginTop="24dp"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:color="#007722"
-        app:percentage="63"
-        app:strokeMargin="6dp"
-        app:strokeWidth="6dp" />
+        <com.app.pieprogress.PieProgress
+            android:id="@+id/progress2"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="24dp"
+            app:color="#dd00aa"
+            app:percentage="29"
+            app:strokeMargin="8dp"
+            app:strokeWidth="8dp" />
 
-</LinearLayout>
+        <com.app.pieprogress.PieProgress
+            android:id="@+id/progress3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="24dp"
+            app:color="#007722"
+            app:percentage="63"
+            app:strokeMargin="6dp"
+            app:strokeWidth="6dp" />
+
+    </LinearLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_plus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Increase"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_minus"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_minus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Decrease"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_plus" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
