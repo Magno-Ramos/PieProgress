@@ -1,17 +1,17 @@
 package com.app.pieprogress
 
-
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 
-private const val DEFAULT_STROKE_WIDTH = 10F
-private const val DEFAULT_STROKE_MARGIN = 20F
+private const val DEFAULT_STROKE_WIDTH = 10f
+private const val DEFAULT_STROKE_MARGIN = 10f
 
 class PieProgress @JvmOverloads constructor(
     context: Context,
@@ -49,7 +49,7 @@ class PieProgress @JvmOverloads constructor(
             strokeWidth = getDimension(R.styleable.PieProgress_strokeWidth, DEFAULT_STROKE_WIDTH)
             strokeMargin = getDimension(R.styleable.PieProgress_strokeMargin, DEFAULT_STROKE_MARGIN)
 
-            getColor(R.styleable.PieProgress_color, 0).run(::setColor)
+            getColor(R.styleable.PieProgress_color, Color.BLUE).run(::setColor)
             getFloat(R.styleable.PieProgress_percentage, 10f).run(::setPercentage)
             recycle()
         }
@@ -62,8 +62,8 @@ class PieProgress @JvmOverloads constructor(
 
         val pieLeft = strokeWidth + strokeMargin
         val pieTop = strokeWidth + strokeMargin
-        val pieRight = w.toFloat() - strokeWidth - strokeMargin
-        val pieBottom = w.toFloat() - strokeWidth - strokeMargin
+        val pieRight = w.toFloat() - strokeMargin - strokeWidth
+        val pieBottom = w.toFloat() - strokeMargin - strokeWidth
 
         pieRectF.set(pieLeft, pieTop, pieRight, pieBottom)
     }
