@@ -32,6 +32,9 @@ class PieProgress @JvmOverloads constructor(
     private var strokeMargin = DEFAULT_STROKE_MARGIN
 
     private val pieRectF = RectF()
+    private var strokeX: Float = 0f
+    private var strokeY: Float = 0f
+    private var strokeRadius: Float = 0f
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -59,6 +62,10 @@ class PieProgress @JvmOverloads constructor(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+
+        strokeX = (w / 2).toFloat()
+        strokeY = (h / 2).toFloat()
+        strokeRadius = (w / 2).toFloat() - strokeWidth
 
         val pieLeft = strokeWidth + strokeMargin
         val pieTop = strokeWidth + strokeMargin
@@ -92,10 +99,7 @@ class PieProgress @JvmOverloads constructor(
     }
 
     private fun Canvas.drawStroke() {
-        val cx = width.toFloat() / 2
-        val cy = height.toFloat() / 2
-        val radius = (width / 2).toFloat() - strokeWidth
-        drawCircle(cx, cy, radius, strokePaint)
+        drawCircle(strokeX, strokeY, strokeRadius, strokePaint)
     }
 
     fun setColor(color: Int) {
