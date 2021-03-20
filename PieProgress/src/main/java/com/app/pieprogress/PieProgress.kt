@@ -19,9 +19,9 @@ class PieProgress @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private var oldAngle: Float = 0f
+    private var oldAngle: Float = 0.0f
 
-    var currentAngle: Float = 0f
+    var currentAngle: Float = 0.0f
         private set
 
     var currentPercentage = 0f
@@ -37,6 +37,7 @@ class PieProgress @JvmOverloads constructor(
     private var strokeRadius: Float = 0f
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val paintBackground = Paint(Paint.ANTI_ALIAS_FLAG)
     private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
     }
@@ -53,7 +54,7 @@ class PieProgress @JvmOverloads constructor(
             strokeMargin = getDimension(R.styleable.PieProgress_strokeMargin, DEFAULT_STROKE_MARGIN)
 
             getColor(R.styleable.PieProgress_color, Color.BLUE).run(::setColor)
-            getFloat(R.styleable.PieProgress_percentage, 10f).run(::setPercentage)
+            getFloat(R.styleable.PieProgress_percentage, 0.0f).run(::setPercentage)
             recycle()
         }
 
@@ -63,21 +64,22 @@ class PieProgress @JvmOverloads constructor(
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
 
-        strokeX = (w / 2).toFloat()
-        strokeY = (h / 2).toFloat()
-        strokeRadius = (w / 2).toFloat() - strokeWidth
-
-        val pieLeft = strokeWidth + strokeMargin
-        val pieTop = strokeWidth + strokeMargin
+        val pieLeft = strokeMargin + strokeWidth
+        val pieTop = strokeMargin + strokeWidth
         val pieRight = w.toFloat() - strokeMargin - strokeWidth
-        val pieBottom = w.toFloat() - strokeMargin - strokeWidth
+        val pieBottom = h.toFloat() - strokeMargin - strokeWidth
 
         pieRectF.set(pieLeft, pieTop, pieRight, pieBottom)
+
+        strokeX = ((pieLeft + pieRight) / 2)
+        strokeY = ((pieTop + pieBottom) / 2)
+        strokeRadius = (w - strokeWidth) / 2
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.drawStroke()
+        canvas?.drawPieBackground()
         canvas?.drawPieContent()
     }
 
@@ -98,20 +100,29 @@ class PieProgress @JvmOverloads constructor(
         drawArc(pieRectF, 0.0f, currentAngle, true, paint)
     }
 
+    private fun Canvas.drawPieBackground() {
+        drawArc(pieRectF, 0.0f, 360.0f, true, paintBackground)
+    }
+
     private fun Canvas.drawStroke() {
         drawCircle(strokeX, strokeY, strokeRadius, strokePaint)
     }
 
     fun setColor(color: Int) {
         paint.color = color
-        strokePaint.color = color
+        strokePaint.color = Color.BLACK
+
+        val colorStr = String.format("#22%06X", 0xFFFFFF and color)
+        paintBackground.color = Color.parseColor(colorStr)
     }
 
     fun setPercentage(percentage: Float) {
-        val percentValue = if (percentage > 100f) 100f else percentage
-        oldAngle = currentAngle
-        currentAngle = MAX_ANGLE.percent(percentValue).toFloat()
-        startAnimation(oldAngle, currentAngle)
+        if (percentage.isNaN().not()) {
+            val percentValue = if (percentage > 100f) 100f else percentage
+            oldAngle = currentAngle
+            currentAngle = MAX_ANGLE.percent(percentValue).toFloat()
+            startAnimation(oldAngle, currentAngle)
+        }
     }
 
     companion object {
